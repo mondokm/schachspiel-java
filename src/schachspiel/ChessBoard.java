@@ -153,7 +153,6 @@ public class ChessBoard extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ChessTile tile=(ChessTile) e.getSource();
-			System.out.println(playersTurn);
 			if (stepOptions.isEmpty())
 		    {
 		        if (tile.getFigure() == null) return;
