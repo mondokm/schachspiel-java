@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -61,6 +62,12 @@ public class ChessBoard extends JPanel{
 		networkUtils.startListening();
 	}
 	
+	public void closedGame() {
+		networkUtils.sendMessage(new Message(Type.CLOSED));
+		networkUtils.stopListening();
+		networkUtils.closeAll();
+	}
+	
 	protected void fillWithTiles() {
 		TileListener tl=new TileListener();
 		
@@ -73,7 +80,7 @@ public class ChessBoard extends JPanel{
 	    }
 	}
 	
-	void fillBoard()
+	protected void fillBoard()
 	{
 	    int queenColumn = (int)(m - 1) / 2;
 
@@ -90,12 +97,23 @@ public class ChessBoard extends JPanel{
 	    arr[n - 1][queenColumn + 2].setFigure(new Bishop(playerSide));
 
 	    //Kings
-	    arr[0][queenColumn + 1].setFigure(new King(opponentSide));
-	    arr[n - 1][queenColumn + 1].setFigure(new King(playerSide));
+	    if(playerSide==ChessColor.WHITE) {
+	    	arr[0][queenColumn + 1].setFigure(new King(opponentSide));
+		    arr[n - 1][queenColumn + 1].setFigure(new King(playerSide));
+	    }else {
+	    	arr[0][queenColumn].setFigure(new King(opponentSide));
+		    arr[n - 1][queenColumn].setFigure(new King(playerSide));
+	    }
 
 	    //Queens
-	    arr[0][queenColumn].setFigure(new Queen(opponentSide));
-	    arr[n - 1][queenColumn].setFigure(new Queen(playerSide));
+	    if(playerSide==ChessColor.WHITE) {
+	    	arr[0][queenColumn].setFigure(new Queen(opponentSide));
+		    arr[n - 1][queenColumn].setFigure(new Queen(playerSide));
+	    }else {
+	    	arr[0][queenColumn+1].setFigure(new Queen(opponentSide));
+		    arr[n - 1][queenColumn+1].setFigure(new Queen(playerSide));
+	    }
+	    
 
 	    //Knights
 	    arr[0][queenColumn - 2].setFigure(new Knight(opponentSide));
@@ -150,11 +168,10 @@ public class ChessBoard extends JPanel{
 		    }
 		    else
 		    {
+	        	boolean won=false;
 		        if (stepOptions.contains(tile))
 		        {
-		            if (tile.getFigure()!=null && tile.getFigure() instanceof King){
-		                System.out.println("Winner");
-		            }
+		            if (tile.getFigure()!=null && tile.getFigure() instanceof King) won=true;
 		            tile.setFigure(lastPressed.getFigure());
 		            lastPressed.setFigure(null);
 		            int[] fromPlace=getTilePlace(lastPressed);
@@ -167,6 +184,13 @@ public class ChessBoard extends JPanel{
 		            t.resetColor();
 		        }
 		        stepOptions.clear();
+		        if(won) {
+		        	networkUtils.sendMessage(new Message(Type.WINNER, ""));
+	                networkUtils.stopListening();
+					networkUtils.closeAll();
+					JOptionPane.showMessageDialog(null, "You have won the game");
+					SwingUtilities.getWindowAncestor(ChessBoard.this).dispose();
+		        }
 		    }
 		}
 
@@ -212,6 +236,16 @@ public class ChessBoard extends JPanel{
 				fillBoard();
 				SwingUtilities.getWindowAncestor(ChessBoard.this).pack();
 				
+			} else if(message.getType()==Type.CLOSED) {
+				networkUtils.stopListening();
+				networkUtils.closeAll();
+				JOptionPane.showMessageDialog(null, "The other player closed the game");
+				SwingUtilities.getWindowAncestor(ChessBoard.this).dispose();
+			} else if(message.getType()==Type.WINNER) {
+				networkUtils.stopListening();
+				networkUtils.closeAll();
+				JOptionPane.showMessageDialog(null, "The other player has won the game");
+				SwingUtilities.getWindowAncestor(ChessBoard.this).dispose();
 			}
 		}
 		

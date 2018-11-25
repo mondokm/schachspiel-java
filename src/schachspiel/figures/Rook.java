@@ -8,8 +8,8 @@ import schachspiel.ChessTile;
 
 public class Rook extends ChessFigure{
 	
-	private final static String BLACK_ROOK_PATH="res/BlackRook.png";
-	private final static String WHITE_ROOK_PATH="res/WhiteRook.png";
+	private final static String BLACK_ROOK_PATH="images/BlackRook.png";
+	private final static String WHITE_ROOK_PATH="images/WhiteRook.png";
 
 	public Rook(ChessColor side) {
 		super(side);

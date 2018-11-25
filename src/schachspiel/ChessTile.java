@@ -40,7 +40,7 @@ public class ChessTile extends JLabel{
 		if(figure==null) {
 			setIcon(null);
 		} else {
-			ImageIcon image=new ImageIcon(figure.getPath());
+			ImageIcon image=new ImageIcon(ChessTile.class.getResource("/"+figure.getPath()));
 			setIcon(image);
 		}
 	}

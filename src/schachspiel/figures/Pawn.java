@@ -8,8 +8,8 @@ import schachspiel.ChessTile;
 
 public class Pawn extends ChessFigure {
 
-	private final static String BLACK_PAWN_PATH = "res/BlackPawn.png";
-	private final static String WHITE_PAWN_PATH = "res/WhitePawn.png";
+	private final static String BLACK_PAWN_PATH = "images/BlackPawn.png";
+	private final static String WHITE_PAWN_PATH = "images/WhitePawn.png";
 
 	public Pawn(ChessColor side) {
 		super(side);

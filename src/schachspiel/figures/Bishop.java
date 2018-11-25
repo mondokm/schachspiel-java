@@ -8,8 +8,8 @@ import schachspiel.ChessTile;
 
 public class Bishop extends ChessFigure{
 	
-	private final static String BLACK_BISHOP_PATH="res/BlackBishop.png";
-	private final static String WHITE_BISHOP_PATH="res/WhiteBishop.png";
+	private final static String BLACK_BISHOP_PATH="images/BlackBishop.png";
+	private final static String WHITE_BISHOP_PATH="images/WhiteBishop.png";
 
 	public Bishop(ChessColor side) {
 		super(side);

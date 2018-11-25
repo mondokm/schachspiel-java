@@ -3,7 +3,11 @@ package schachspiel;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -48,11 +52,22 @@ public class Chess {
 			Thread t=new Thread(()-> {
 				JFrame gameFrame=new JFrame("Schachspiel Server");
 				
+				
 				ChessBoard board=new ChessBoard(8, 8);
 				board.startServer(serverSideWhite.isSelected()?ChessColor.WHITE:ChessColor.BLACK, Integer.parseInt(serverPort.getText()));
 				
+				gameFrame.addWindowListener(new WindowAdapter() {
+		            public void windowClosing(WindowEvent e) {
+		                try {
+		                	board.closedGame();
+		                } catch(Exception ex) {
+		                    ex.printStackTrace();
+		                }
+		            }
+		        });
 				gameFrame.setContentPane(board);
 				gameFrame.pack();
+				gameFrame.setResizable(false);
 				gameFrame.setVisible(true);
 			});
 			t.start();
@@ -69,8 +84,18 @@ public class Chess {
 				ChessBoard board=new ChessBoard(8, 8);
 				board.startClient(clientHost.getText(), Integer.parseInt(clientPort.getText()));
 				
+				gameFrame.addWindowListener(new WindowAdapter() {
+		            public void windowClosing(WindowEvent e) {
+		                try {
+		                	board.closedGame();
+		                } catch(Exception ex) {
+		                    ex.printStackTrace();
+		                }
+		            }
+		        });
 				gameFrame.setContentPane(board);
 				gameFrame.pack();
+				gameFrame.setResizable(false);
 				gameFrame.setVisible(true);
 			});
 			t.start();
@@ -94,6 +119,7 @@ public class Chess {
 
 		serverPortLabel = new JLabel("Port:");
 		serverPort = new JTextField(20);
+		serverPort.setText("5555");
 		serverSideLabel = new JLabel("Choose a side:");
 		serverSideWhite = new JRadioButton("White");
 		serverSideBlack = new JRadioButton("Black");
@@ -112,8 +138,10 @@ public class Chess {
 		
 		clientHostLabel = new JLabel("Host:");
 		clientHost = new JTextField(20);
+		clientHost.setText("localhost");
 		clientPortLabel = new JLabel("Port:");
 		clientPort = new JTextField(20);
+		clientPort.setText("5555");
 		clientButton = new JButton("Connect");
 		
 		clientPanel.add(clientHostLabel);
@@ -126,6 +154,7 @@ public class Chess {
 		
 		frame.setContentPane(mainPanel);
 		frame.pack();
+		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

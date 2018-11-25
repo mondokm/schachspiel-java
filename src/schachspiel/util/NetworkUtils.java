@@ -16,6 +16,8 @@ public class NetworkUtils {
 	Socket socket;
 	ServerSocket serverSocket;
 	
+	ObjectReceiver receiver;
+	
 	List<NetworkListener> listeners=new ArrayList<NetworkListener>();
 	
 	public void setupClient(String host, int port) {
@@ -46,7 +48,7 @@ public class NetworkUtils {
 				if(socket!=null) socket.close();
 				if(serverSocket!=null) serverSocket.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		
 	}
@@ -54,22 +56,29 @@ public class NetworkUtils {
 	public void sendMessage(Message message) {
 		try {
 			oos.writeObject(message);
+			oos.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
 	public class ObjectReceiver extends Thread{
+		private volatile boolean listening=false;
+		public void terminate() {
+			listening=false;
+		}
 		public void run() {
-			while(true) {
+			listening=true;
+			while(listening) {
 				try {
 					Object o=NetworkUtils.this.ois.readObject();
 					if(o!=null) {
 						for(NetworkListener listener: NetworkUtils.this.listeners) listener.messageReceived((Message) o);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
+				
 			}
 		}
 	}
@@ -79,8 +88,12 @@ public class NetworkUtils {
 	}
 	
 	public void startListening() {
-		ObjectReceiver receiver=new ObjectReceiver();
+		receiver=new ObjectReceiver();
 		receiver.start();
+	}
+	
+	public void stopListening() {
+		receiver.terminate();
 	}
 	
 }

@@ -8,8 +8,8 @@ import schachspiel.ChessTile;
 
 public class King extends ChessFigure{
 	
-	private final static String BLACK_KING_PATH="res/BlackKing.png";
-	private final static String WHITE_KING_PATH="res/WhiteKing.png";
+	private final static String BLACK_KING_PATH="images/BlackKing.png";
+	private final static String WHITE_KING_PATH="images/WhiteKing.png";
 
 	public King(ChessColor side) {
 		super(side);
