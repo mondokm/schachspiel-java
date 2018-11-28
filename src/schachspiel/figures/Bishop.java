@@ -6,11 +6,27 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * Bishop figure
+ * @author milan
+ *
+ */
 public class Bishop extends ChessFigure{
 	
+	/**
+	 * The image path for the black figure
+	 */
 	private final static String BLACK_BISHOP_PATH="images/BlackBishop.png";
+
+	/**
+	 * The image path for the white figure
+	 */
 	private final static String WHITE_BISHOP_PATH="images/WhiteBishop.png";
 
+	/**
+	 * 
+	 * @param side The side of the figure
+	 */
 	public Bishop(ChessColor side) {
 		super(side);
 	}

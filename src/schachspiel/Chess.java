@@ -20,6 +20,11 @@ import javax.swing.JTextField;
 
 import schachspiel.figures.ChessFigure.ChessColor;
 
+/**
+ * The main class of the chess program
+ * @author milan
+ *
+ */
 public class Chess {
 
 	JFrame frame;
@@ -104,6 +109,9 @@ public class Chess {
 		
 	}
 	
+	/**
+	 * Initialises the user interface
+	 */
 	void setupGUI() {
 		frame=new JFrame("Schachspiel Launcher");
 		

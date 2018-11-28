@@ -6,11 +6,27 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * Rook figure
+ * @author milan
+ *
+ */
 public class Rook extends ChessFigure{
-	
+
+	/**
+	 * The image path for the black figure
+	 */
 	private final static String BLACK_ROOK_PATH="images/BlackRook.png";
+
+	/**
+	 * The image path for the white figure
+	 */
 	private final static String WHITE_ROOK_PATH="images/WhiteRook.png";
 
+	/**
+	 * 
+	 * @param side The side of the figure
+	 */
 	public Rook(ChessColor side) {
 		super(side);
 	}

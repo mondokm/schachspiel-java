@@ -6,11 +6,27 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * Pawn figure
+ * @author milan
+ *
+ */
 public class Pawn extends ChessFigure {
 
+	/**
+	 * The image path for the black figure
+	 */
 	private final static String BLACK_PAWN_PATH = "images/BlackPawn.png";
+
+	/**
+	 * The image path for the white figure
+	 */
 	private final static String WHITE_PAWN_PATH = "images/WhitePawn.png";
 
+	/**
+	 * 
+	 * @param side The side of the figure
+	 */
 	public Pawn(ChessColor side) {
 		super(side);
 	}

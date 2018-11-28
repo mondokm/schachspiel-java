@@ -9,6 +9,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for communicating with the other player
+ * @author milan
+ *
+ */
 public class NetworkUtils {
 
 	ObjectOutputStream oos;
@@ -20,6 +25,11 @@ public class NetworkUtils {
 	
 	List<NetworkListener> listeners=new ArrayList<NetworkListener>();
 	
+	/**
+	 * Sets up communication in client mode
+	 * @param host The host address
+	 * @param port The host port
+	 */
 	public void setupClient(String host, int port) {
 		try {
 			socket=new Socket(host,port);
@@ -30,6 +40,10 @@ public class NetworkUtils {
 		}
 	}
 	
+	/**
+	 * Sets up communication in server mode
+	 * @param port The port
+	 */
 	public void setupServer(int port) {
 		try {
 			serverSocket=new ServerSocket(port);
@@ -41,6 +55,9 @@ public class NetworkUtils {
 		}
 	}
 	
+	/**
+	 * Closes all sockets and streams
+	 */
 	public void closeAll() {
 			try {
 				if(ois!=null) ois.close();
@@ -53,6 +70,10 @@ public class NetworkUtils {
 		
 	}
 	
+	/**
+	 * Sends a message to the other player
+	 * @param message The message
+	 */
 	public void sendMessage(Message message) {
 		try {
 			oos.writeObject(message);
@@ -83,15 +104,25 @@ public class NetworkUtils {
 		}
 	}
 	
+	/**
+	 * Registers a new listener
+	 * @param listener The listener
+	 */
 	public void addListener(NetworkListener listener) {
 		listeners.add(listener);
 	}
 	
+	/**
+	 * Starts receiving messages
+	 */
 	public void startListening() {
 		receiver=new ObjectReceiver();
 		receiver.start();
 	}
 	
+	/**
+	 * Stops receiving messages
+	 */
 	public void stopListening() {
 		receiver.terminate();
 	}

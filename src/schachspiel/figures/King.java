@@ -6,11 +6,27 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * King figure
+ * @author milan
+ *
+ */
 public class King extends ChessFigure{
-	
+
+	/**
+	 * The image path for the black figure
+	 */
 	private final static String BLACK_KING_PATH="images/BlackKing.png";
+
+	/**
+	 * The image path for the white figure
+	 */
 	private final static String WHITE_KING_PATH="images/WhiteKing.png";
 
+	/**
+	 * 
+	 * @param side The side of the figure
+	 */
 	public King(ChessColor side) {
 		super(side);
 	}

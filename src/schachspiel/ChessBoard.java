@@ -24,6 +24,11 @@ import schachspiel.util.Message.Type;
 import schachspiel.util.NetworkListener;
 import schachspiel.util.NetworkUtils;
 
+/**
+ * Represents a chess board
+ * @author milan
+ *
+ */
 public class ChessBoard extends JPanel{
 	private ChessTile[][] arr;
 	private int n,m;
@@ -34,6 +39,11 @@ public class ChessBoard extends JPanel{
 	private ChessColor opponentSide;
 	private NetworkUtils networkUtils;
 	
+	/**
+	 * The constructor of ChessBoard
+	 * @param n The height of the board
+	 * @param m The width of the board
+	 */
 	public ChessBoard(int n, int m) {
 		super(new GridLayout(n, m));
 		this.n=n;
@@ -43,6 +53,11 @@ public class ChessBoard extends JPanel{
 		stepOptions=new ArrayList<ChessTile>();
 	}
 	
+	/**
+	 * Starts the game in client mode
+	 * @param host The host address
+	 * @param port The host port
+	 */
 	public void startClient(String host, int port) {
 		networkUtils=new NetworkUtils();
 		networkUtils.setupClient(host,port);
@@ -50,6 +65,11 @@ public class ChessBoard extends JPanel{
 		networkUtils.startListening();
 	}
 	
+	/**
+	 * Starts the game in server mode
+	 * @param serverSide The side of the player
+	 * @param port The host port
+	 */
 	public void startServer(ChessColor serverSide, int port) {
 		playerSide=serverSide;
 		playersTurn=playerSide==ChessColor.BLACK?false:true;
@@ -62,12 +82,18 @@ public class ChessBoard extends JPanel{
 		networkUtils.startListening();
 	}
 	
+	/**
+	 * Stops network communication
+	 */
 	public void closedGame() {
 		networkUtils.sendMessage(new Message(Type.CLOSED));
 		networkUtils.stopListening();
 		networkUtils.closeAll();
 	}
 	
+	/**
+	 * Fills the board with tiles
+	 */
 	protected void fillWithTiles() {
 		TileListener tl=new TileListener();
 		
@@ -80,6 +106,9 @@ public class ChessBoard extends JPanel{
 	    }
 	}
 	
+	/**
+	 * Fills the tiles with figures
+	 */
 	protected void fillBoard()
 	{
 	    int queenColumn = (int)(m - 1) / 2;
@@ -136,18 +165,36 @@ public class ChessBoard extends JPanel{
 	        arr[n - 1][i].setFigure(new Pawn(playerSide));
 	}
 	
+	/**
+	 * Returns the requested tile
+	 * @param i The row
+	 * @param j The column
+	 * @return The requested tile
+	 */
 	public ChessTile getTile(int i, int j) {
 		return arr[i][j];
 	}
 	
+	/**
+	 * Returns the height of the board
+	 * @return The height of the board
+	 */
 	public int getN() {
 		return n;
 	}
 	
+	/**
+	 * Returns the width of the board
+	 * @return The width of the board
+	 */
 	public int getM() {
 		return m;
 	}
 	
+	/**
+	 * A class that listens to the tiles
+	 * @author milan
+	 */
 	class TileListener implements MouseListener{
 
 		@Override
@@ -190,6 +237,7 @@ public class ChessBoard extends JPanel{
 					JOptionPane.showMessageDialog(null, "You have won the game");
 					SwingUtilities.getWindowAncestor(ChessBoard.this).dispose();
 		        }
+		        
 		    }
 		}
 
@@ -215,6 +263,11 @@ public class ChessBoard extends JPanel{
 		
 	}
 	
+	/**
+	 * A class that listens to the network messages
+	 * @author milan
+	 *
+	 */
 	class MessageListener implements NetworkListener{
 
 		public void messageReceived(Message message) {
@@ -250,10 +303,18 @@ public class ChessBoard extends JPanel{
 		
 	}
 	
+	/**
+	 * The turn of the current player is over
+	 */
 	public void nextPlayer() {
 		playersTurn=!playersTurn;
 	}
 	
+	/**
+	 * Returns the coordinates of the specified Tile
+	 * @param tile The tile
+	 * @return The coordinates (row, column)
+	 */
 	public int[] getTilePlace(ChessTile tile) {
 		int[] res=new int[2];
 		res[0]=-1;

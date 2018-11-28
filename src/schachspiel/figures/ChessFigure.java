@@ -6,24 +6,57 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * A chess figure
+ * @author milan
+ *
+ */
 public abstract class ChessFigure {
 	public enum ChessColor {WHITE, BLACK};
 	
+	/**
+	 * The color of the figure
+	 */
 	protected ChessColor side;
-	
+
+	/**
+	 * Creates a figure with the given side
+	 * @param side The color of the figure
+	 */
 	public ChessFigure(ChessColor side) {
 		this.side=side;
 	}
 	
+	/**
+	 * The color of the figure
+	 * @return The color of the figure
+	 */
 	public ChessColor getSide() {
 		return side;
 	}
 	
+	/**
+	 * Returns the tiles, where the figure could step
+	 * @param board The board on which the figure is located
+	 * @return A list of the possible tiles
+	 */
 	public abstract List<ChessTile> getStepOptions(ChessBoard board);
 	
+	/**
+	 * Returns the path of the image of this figure
+	 * @return The path of the image of this figure
+	 */
 	public abstract String getPath();
 	
-	public List<ChessTile> getHorizontalSteppingOptions(ChessBoard board, int distance, int row, int column){
+	/**
+	 * For figures that can step horizontally
+	 * @param board The board where the figure is located
+	 * @param distance How far the figure is allowed to step
+	 * @param row The row of the figure
+	 * @param column The column of the figure
+	 * @return A list of the possible tiles
+	 */
+	protected List<ChessTile> getHorizontalSteppingOptions(ChessBoard board, int distance, int row, int column){
 		
 		ArrayList<ChessTile> steps=new ArrayList<ChessTile>();
 
@@ -62,7 +95,15 @@ public abstract class ChessFigure {
 	    return steps;
 	}
 	
-	List<ChessTile> getVerticalSteppingOptions(ChessBoard board, int dist, int row, int column)
+	/**
+	 * For figures that can step vertically
+	 * @param board The board where the figure is located
+	 * @param dist How far the figure is allowed to step
+	 * @param row The row of the figure
+	 * @param column The column of the figure
+	 * @return A list of the possible tiles
+	 */
+	protected List<ChessTile> getVerticalSteppingOptions(ChessBoard board, int dist, int row, int column)
 	{
 	    ArrayList<ChessTile> steps=new ArrayList<ChessTile>();
 
@@ -100,7 +141,15 @@ public abstract class ChessFigure {
 	    return steps;
 	}
 
-	List<ChessTile> getDiagonalSteppingOptions(ChessBoard board, int dist, int row, int column)
+	/**
+	 * For figures that can step diagonally
+	 * @param board The board where the figure is located
+	 * @param dist How far the figure is allowed to step
+	 * @param row The row of the figure
+	 * @param column The column of the figure
+	 * @return A list of the possible tiles
+	 */
+	protected List<ChessTile> getDiagonalSteppingOptions(ChessBoard board, int dist, int row, int column)
 	{
 	    ArrayList<ChessTile> steps= new ArrayList<ChessTile>();
 

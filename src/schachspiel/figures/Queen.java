@@ -6,11 +6,27 @@ import java.util.List;
 import schachspiel.ChessBoard;
 import schachspiel.ChessTile;
 
+/**
+ * Queen figure
+ * @author milan
+ *
+ */
 public class Queen extends ChessFigure{
-	
+
+	/**
+	 * The image path for the black figure
+	 */	
 	private final static String BLACK_QUEEN_PATH="images/BlackQueen.png";
+
+	/**
+	 * The image path for the white figure
+	 */
 	private final static String WHITE_QUEEN_PATH="images/WhiteQueen.png";
 
+	/**
+	 * 
+	 * @param side The side of the figure
+	 */
 	public Queen(ChessColor side) {
 		super(side);
 	}
